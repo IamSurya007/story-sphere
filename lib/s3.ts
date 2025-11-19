@@ -58,7 +58,11 @@ export async function uploadImageToS3(
   })
 
   await s3Client.send(command);
-  console.log('CloudFront URL not configured, returning S3 URL', fileName, BUCKET_NAME, process.env.AWS_REGION)
+
+  if (process.env.AWS_CLOUDFRONT_URL) {
+    const cloudFrontUrl = `${process.env.AWS_CLOUDFRONT_URL}/${fileName}`
+    return cloudFrontUrl
+  }
   return `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/${fileName}`
 }
 
