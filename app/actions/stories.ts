@@ -158,6 +158,7 @@ export async function uploadStoryImage(formData: FormData) {
     }
 
     const imageUrl = await uploadImageToS3(file, session.user.id)
+    console.log('Image uploaded to URL:', imageUrl)
 
     return { success: true, imageUrl }
   } catch (error) {

@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     domains: [
-      'your-s3-bucket.s3.amazonaws.com',
+      'story-spehere-uploads.s3.us-east-1.amazonaws.com',
       'your-cloudfront-domain.cloudfront.net',
     ],
     remotePatterns: [

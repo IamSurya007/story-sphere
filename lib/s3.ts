@@ -40,10 +40,10 @@ export async function uploadImageToS3(
       'Image upload is not available. AWS S3 is not configured. Please set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_S3_BUCKET_NAME in your .env file.'
     )
   }
+  console.log('Uploading image to S3 for user:', userId)
 
   const s3Client = getS3Client()
   const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME!
-  const CLOUDFRONT_URL = process.env.AWS_CLOUDFRONT_URL
 
   const fileExtension = file.name.split('.').pop()
   const fileName = `${userId}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExtension}`
@@ -55,16 +55,10 @@ export async function uploadImageToS3(
     Key: fileName,
     Body: buffer,
     ContentType: file.type,
-    ACL: 'public-read',
   })
 
-  await s3Client.send(command)
-
-  // Return CloudFront URL if configured, otherwise S3 URL
-  if (CLOUDFRONT_URL) {
-    return `${CLOUDFRONT_URL}/${fileName}`
-  }
-  
+  await s3Client.send(command);
+  console.log('CloudFront URL not configured, returning S3 URL', fileName, BUCKET_NAME, process.env.AWS_REGION)
   return `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/${fileName}`
 }
 

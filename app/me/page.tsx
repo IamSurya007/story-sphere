@@ -133,7 +133,7 @@ export default async function MyJournalPage({
           {stories.map((story) => (
             <div key={story.id} className="relative">
               <StoryCard story={story} showAuthor={false} />
-              <div className="absolute top-4 right-4 flex gap-2">
+              <div className="absolute bottom-4 right-4 flex gap-2">
                 <Link
                   href={`/write/${story.id}`}
                   className="px-3 py-1 bg-white/90 backdrop-blur-sm border border-primary-300 text-primary-700 rounded text-sm hover:bg-primary-50 transition-colors"
