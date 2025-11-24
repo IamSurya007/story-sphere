@@ -60,15 +60,15 @@ export default function SignUpPage() {
         } else {
           setError('Account created! Please sign in.')
           setTimeout(() => {
-            router.push('/auth/signin')
+            router.push('/me')
           }, 2000)
         }
       } catch (signInErr) {
         console.error('Auto sign-in error:', signInErr)
         setError('Account created! Please sign in.')
-        setTimeout(() => {
-          router.push('/auth/signin')
-        }, 2000)
+        // setTimeout(() => {
+        //   router.push('/auth/signin')
+        // }, 2000)
       }
     } catch (err) {
       console.error('Sign up error:', err)
@@ -80,7 +80,6 @@ export default function SignUpPage() {
   }
 
   const handleGoogleSignIn = async () => {
-    console.log('Google sign-in initiated')
     await signIn('google', { callbackUrl: '/me' })
   }
 

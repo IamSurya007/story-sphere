@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #f4f9ff;
   --foreground: #0f172a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f172a;
+    --background: #f4f9ff;
     --foreground: #f8fafc;
   }
 }
@@ -57,5 +57,8 @@ input[type="email"]:focus,
 input[type="password"]:focus,
 textarea:focus {
   background-color: white;
+}
+.bg-background {
+  background: var(--background);
 }
 

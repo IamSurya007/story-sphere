@@ -9,6 +9,11 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 export const metadata: Metadata = {
   title: 'StorySphere - Your Private Journaling Space',
   description: 'A calm, minimal platform for reflection and storytelling',
+  icons:{
+    icon: '/icon.png',
+    shortcut: "/icon.png",
+    apple: "/icon.png"
+  }
 }
 
 export default function RootLayout({
@@ -27,6 +32,7 @@ export default function RootLayout({
     </html>
   )
 }
+
 
 
 

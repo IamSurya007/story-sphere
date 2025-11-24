@@ -24,8 +24,8 @@ export default function SignInPage() {
         password,
         redirect: false,
       })
-      console.log('Sign-in result:', result);
 
+      console.log('Sign-in result:', result)
       if (result?.error) {
         // Show more specific error messages
         if (result.error === 'CredentialsSignin') {
@@ -35,8 +35,10 @@ export default function SignInPage() {
         }
       } else if (result?.ok) {
         console.log('Sign-in successful, redirecting to /me');
+        router.push('/me')
       } else {
-        setError('Sign in failed. Please try again.')
+        console.log('Sign-in result:', result);
+        router.push('/me')
       }
     } catch (err) {
       console.error('Sign in error:', err)
@@ -48,8 +50,7 @@ export default function SignInPage() {
   }
 
   const handleGoogleSignIn = async () => {
-    console.log('Google sign-in initiated');
-    await signIn('google')
+    await signIn('google', {callbackUrl: '/me'})
   }
 
   return (
