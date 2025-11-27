@@ -1,7 +1,7 @@
 'use client'
 
 import { signIn } from 'next-auth/react'
-import { useState, useEffect } from 'react'
+import React, {useState, useEffect, FormEvent} from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -13,40 +13,38 @@ export default function SignInPage() {
   const [loading, setLoading] = useState(false)
   const [googleEnabled, setGoogleEnabled] = useState(true)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
-
-    try {
-      const result = await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
-      })
-
-      console.log('Sign-in result:', result)
-      if (result?.error) {
-        // Show more specific error messages
-        if (result.error === 'CredentialsSignin') {
-          setError('Invalid email or password')
-        } else {
-          setError(`Sign in failed: ${result.error}`)
-        }
-      } else if (result?.ok) {
-        console.log('Sign-in successful, redirecting to /me');
-        router.push('/me')
-      } else {
-        console.log('Sign-in result:', result);
-        router.push('/me')
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+      try {
+          const result = await signIn('credentials', {
+              email,
+              password,
+              redirect: false,
+              callbackUrl: "/me"
+          })
+          if (result?.error) {
+              // Show more specific error messages
+              if (result.error === 'CredentialsSignin') {
+                  setError('Invalid email or password')
+              } else {
+                  setError(`Sign in failed: ${result.error}`)
+              }
+          } else if (result?.ok) {
+              console.log('Sign-in successful, redirecting to /me');
+              router.push('/me')
+          } else {
+              console.log('Sign-in result:', result);
+              router.push('/me')
+          }
+      } catch (err) {
+          console.error('Sign in error:', err)
+          const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.'
+          setError(errorMessage)
+      } finally {
+          setLoading(false)
       }
-    } catch (err) {
-      console.error('Sign in error:', err)
-      const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.'
-      setError(errorMessage)
-    } finally {
-      setLoading(false)
-    }
   }
 
   const handleGoogleSignIn = async () => {

@@ -1,7 +1,7 @@
 'use client'
 
 import { signIn } from 'next-auth/react'
-import { useState, useEffect } from 'react'
+import {useState, useEffect, FormEvent} from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { signUp } from '@/app/actions/auth'
@@ -15,7 +15,7 @@ export default function SignUpPage() {
   const [loading, setLoading] = useState(false)
   const [googleEnabled, setGoogleEnabled] = useState(true)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)

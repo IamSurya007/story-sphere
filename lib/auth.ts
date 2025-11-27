@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { prisma } from './db'
-import bcrypt from 'bcryptjs' 
+import bcrypt from 'bcryptjs'
 
 // Check if Google OAuth is properly configured
 export const isGoogleOAuthConfigured = 
@@ -17,14 +17,15 @@ export const isGoogleOAuthConfigured =
 
 // Build providers array conditionally
 const credentialsProvider = CredentialsProvider({
-  name: 'credentials',
+    id: "credentials",
+    name: "Credentials",
+    type: "credentials",
   credentials: {
     email: { label: 'Email', type: 'email' },
     password: { label: 'Password', type: 'password' },
   },
   async authorize(credentials) {
     try {
-      alert('Authorize called'); // Debugging line
       console.log('[Auth] Authorizing user with credentials:', credentials)
       if (!credentials?.email || !credentials?.password) {
         if (process.env.NODE_ENV === 'development') {
